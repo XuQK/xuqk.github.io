@@ -1,0 +1,874 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|monospace:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术实践,Ubuntu," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="**2016-10-02更新：锐速已经停止注册了，现在有高人放出来锐速破解版，安装使用更加简单了，只不过内核需要匹配。锐速破解版 github 直达  实测环境：VPS为 Vultr，Kvm 架构，Ubuntu 14.04 x64系统。 首先要VPS所安装的系统版本和内核版本符合锐速支持，具体可在锐速当前支持的系统与内核版本查看。 现在VPS提供的系统一般内核都是比较新的版本，不受锐速的支持，比如">
+<meta name="keywords" content="技术实践,Ubuntu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VPS 安装锐速，提升传输速度到极致">
+<meta property="og:url" content="https://xuqk.top/2015/09/02/cj4yxzuny0009eojh6qcz5mtu/index.html">
+<meta property="og:site_name" content="篱笆">
+<meta property="og:description" content="**2016-10-02更新：锐速已经停止注册了，现在有高人放出来锐速破解版，安装使用更加简单了，只不过内核需要匹配。锐速破解版 github 直达  实测环境：VPS为 Vultr，Kvm 架构，Ubuntu 14.04 x64系统。 首先要VPS所安装的系统版本和内核版本符合锐速支持，具体可在锐速当前支持的系统与内核版本查看。 现在VPS提供的系统一般内核都是比较新的版本，不受锐速的支持，比如">
+<meta property="og:image" content="https://www.vultr.com/media/logo1.png">
+<meta property="og:updated_time" content="2016-10-01T16:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VPS 安装锐速，提升传输速度到极致">
+<meta name="twitter:description" content="**2016-10-02更新：锐速已经停止注册了，现在有高人放出来锐速破解版，安装使用更加简单了，只不过内核需要匹配。锐速破解版 github 直达  实测环境：VPS为 Vultr，Kvm 架构，Ubuntu 14.04 x64系统。 首先要VPS所安装的系统版本和内核版本符合锐速支持，具体可在锐速当前支持的系统与内核版本查看。 现在VPS提供的系统一般内核都是比较新的版本，不受锐速的支持，比如">
+<meta name="twitter:image" content="https://www.vultr.com/media/logo1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://xuqk.top/2015/09/02/cj4yxzuny0009eojh6qcz5mtu/"/>
+
+
+
+
+
+  <title>VPS 安装锐速，提升传输速度到极致 | 篱笆</title>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=59555194";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">篱笆</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人生最该追求的标签，就是自己的名字</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://xuqk.top/2015/09/02/cj4yxzuny0009eojh6qcz5mtu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="QK Xu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="篱笆">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">VPS 安装锐速，提升传输速度到极致</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-09-02T12:31:39+08:00">
+                2015-09-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/09/02/cj4yxzuny0009eojh6qcz5mtu/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2015/09/02/cj4yxzuny0009eojh6qcz5mtu/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">你是第
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>个瞅这篇文章的哟
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>**2016-10-02更新：锐速已经停止注册了，现在有高人放出来锐速破解版，安装使用更加简单了，只不过内核需要匹配。<br><a href="https://github.com/91yun/serverspeeder" target="_blank" rel="external">锐速破解版 github 直达</a></p>
+<hr>
+<p><strong>实测环境：</strong>VPS为 Vultr，Kvm 架构，Ubuntu 14.04 x64系统。</p>
+<p>首先要VPS所安装的系统版本和内核版本符合锐速支持，具体可在<a href="http://my.serverspeeder.com/ls.do?m=availables" target="_blank" rel="external">锐速当前支持的系统与内核版本</a>查看。</p>
+<p>现在VPS提供的系统一般内核都是比较新的版本，不受锐速的支持，比如我在 Vultr 安装的 Ubuntu 14.04 x64 的内核版本就是 3.13.0-52，而从上面的网站查阅可知，锐速在该版本的的 Ubuntu 中支持的内核最高版本为 3.13.0-48，所以就需要更换内核才能安装，不然会提示安装失败！</p>
+<a id="more"></a>
+<hr>
+<h2 id="下面开始具体操作"><a href="#下面开始具体操作" class="headerlink" title="下面开始具体操作"></a>下面开始具体操作</h2><h3 id="1-注册锐速帐号"><a href="#1-注册锐速帐号" class="headerlink" title="1. 注册锐速帐号"></a>1. 注册锐速帐号</h3><p>在<a href="http://my.serverspeeder.com/" target="_blank" rel="external">锐速会员中心</a>注册个帐号，就可以使用它的免费套餐了，适用于 20Mbps 带宽的的服务器加速。虽然现在的 VPS 基本都是 100Mbps 带宽起，但是我们普通用户能有实际上的 20Mbps 能用就相当不错了，所以免费套餐基本够用。</p>
+<h3 id="2-更换系统内核"><a href="#2-更换系统内核" class="headerlink" title="2. 更换系统内核"></a>2. 更换系统内核</h3><p><strong><em>注意：</em></strong>此方法仅在 Ubuntu 测试过，其余系统更换内核方法请自行 <a href="www.google.com">Google</a>！</p>
+<p>Ubuntu 更换内核是超级简单的！</p>
+<p>首先安装需要的内核（在前面提到的网站查阅可知）</p>
+<pre><code>sudo apt-get install linux-image-3.13.0-46-generic
+</code></pre><p> 然后卸载不需要的内核，切换内核版本</p>
+<pre><code>sudo dpkg --get-selections | grep linux-image //列出系统中已有的内核
+sudo apt-get remove linux-image-3.13.0-53-generic linux-image-3.13.0-62-generic //删除不需要的内核
+sudo update-grub //重建 Grub 引导文件
+sudo reboot now //重启
+sudo apt-mark hold linux-image //重启之后还需要固定下内核版本，避免意外升级。
+</code></pre><h3 id="3-安装锐速"><a href="#3-安装锐速" class="headerlink" title="3. 安装锐速"></a>3. 安装锐速</h3><pre><code>wget http://my.serverspeeder.com/d/ls/serverSpeederInstaller.tar.gz //下载锐速安装脚本
+tar xzvf serverSpeederInstaller.tar.gz //解压脚本
+sudo bash serverSpeederInstaller.sh //运行安装脚本
+</code></pre><p>根据屏幕提示输入之前注册的锐速帐号密码，然后后还会提示你输入诸如“欲加速的接口”、“上下行带宽”这些参数，一般来说默认的就好。<strong><em>最后会让你选择是否随系统自动运行，毫无疑问选是。</em></strong></p>
+<p>然后就享受极致带宽吧！</p>
+<h3 id="4-博主使用感受"><a href="#4-博主使用感受" class="headerlink" title="4. 博主使用感受"></a>4. 博主使用感受</h3><p>之前使用在 Vultr 上自建的 Shadowsocks 的时候，速度总是不稳定，从 Google Play 下载软件基本是 20K/s 的速度上下浮动，Youtube 更是完全不要想了。<br>安装锐速后，效果立竿见影，Play 下载软件没低于过 1M/s，大多数时间是 2M/s 左右，Youtube 720P 基本上没卡过（对1080P没需求，所以没测试过，应当差不多），缓冲速度也是 1M/s+。</p>
+<p><strong><em>注意：</em></strong>安装后几分钟到几十分钟内可能 VPS 的 mtr 结果会很不好，具体表现为延迟变得非常大且很不稳定，我的 Vultr 安装锐速前延迟大概在 160ms 左右，安装后几分钟内测试，从 300ms 到 2000ms不等，过个是几分钟就会稳定下来了，现在稳定在 190ms 左右，丢包率在 0.1% 左右。所以安装完后先试用个一天看效果，千万别刚安装看效果不行就马上卸载咯！</p>
+<p>最后打个广告，要是有想法是使用 Vultr 的话，请务必点击下图进入：<br><a href="https://www.vultr.com/?ref=6845724" target="_blank" rel="external"><img src="https://www.vultr.com/media/logo1.png" alt="Vultr"></a></p>
+<hr>
+<p>本博客内容使用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" rel="external">CC BY-NC-SA 3.0</a> 协议授权发布。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技术实践/" rel="tag"># 技术实践</a>
+          
+            <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/12/cj4yxzunt0008eojhac7soyoy/" rel="next" title="Firefox 也能用上最新版 flash">
+                <i class="fa fa-chevron-left"></i> Firefox 也能用上最新版 flash
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/10/cj4yxzuod0010eojhsqxsntt9/" rel="prev" title="安装 Redshift，解决首次启动自动退出问题">
+                安装 Redshift，解决首次启动自动退出问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div id="sidebar-dimmer"></div>
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="QK Xu" />
+          <p class="site-author-name" itemprop="name">QK Xu</p>
+           
+              <p class="site-description motion-element" itemprop="description">不想当程序员的兽医不是好**</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/XuQK" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/u/0/105190295764344493416" target="_blank" title="Google">
+                  
+                    <i class="fa fa-fw fa-google"></i>
+                  
+                  Google
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下面开始具体操作"><span class="nav-number">1.</span> <span class="nav-text">下面开始具体操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-注册锐速帐号"><span class="nav-number">1.1.</span> <span class="nav-text">1. 注册锐速帐号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-更换系统内核"><span class="nav-number">1.2.</span> <span class="nav-text">2. 更换系统内核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-安装锐速"><span class="nav-number">1.3.</span> <span class="nav-text">3. 安装锐速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-博主使用感受"><span class="nav-number">1.4.</span> <span class="nav-text">4. 博主使用感受</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">QK Xu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      已经有
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      个人来打过酱油啦
+    </span>
+  
+
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://xuqk.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://xuqk.top/2015/09/02/cj4yxzuny0009eojh6qcz5mtu/';
+          this.page.identifier = '2015/09/02/cj4yxzuny0009eojh6qcz5mtu/';
+          this.page.title = 'VPS 安装锐速，提升传输速度到极致';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://xuqk.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
